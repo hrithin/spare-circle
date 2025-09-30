@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { auth } from "@/auth";
+
 
 export const metadata = {
   title: "SpareCircle  Buy & Sell Cars, Bikes & Spare Parts",
@@ -6,7 +8,10 @@ export const metadata = {
     "SpareCircle is your local marketplace to buy and sell cars, bikes, and spare parts easily and safely.",
 };
 
-export default function Home() {
+export default async function  Home() {
+
+    const session = await auth();
+  
   return (
     <main className="min-h-screen bg-gray-50">
       {/* Hero Section */}
@@ -18,6 +23,7 @@ export default function Home() {
           <p className="text-lg md:text-xl mb-8">
             Connect with local buyers and sellers easily and safely.
           </p>
+          <p>Welcome {session?.user?.name}</p>
           <div className="flex justify-center gap-4 flex-wrap">
             <Link href="/listings">
               <button className="bg-white text-blue-600 px-6 py-3 rounded-md font-semibold hover:bg-gray-100 transition">
