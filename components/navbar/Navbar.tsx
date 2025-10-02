@@ -17,9 +17,13 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
+import { signOut, useSession } from "next-auth/react";
 
 
 const Navbar = () => {
+
+    const {data: session} = useSession()
+
   return (
     <nav className="w-full bg-white shadow-md px-6 py-3 flex items-center justify-between sticky top-0 z-50">
       {/* Logo */}
@@ -59,7 +63,7 @@ const Navbar = () => {
               size="sm"
               className="flex items-center gap-2 text-gray-700 hover:text-blue-500 transition-colors px-3 py-2"
             >
-              <User className="w-4 h-4" /> Profile
+              <User className="w-4 h-4" /> {(session?.user.name)? session.user.name : "profile" }
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-44">
@@ -69,7 +73,7 @@ const Navbar = () => {
             <DropdownMenuItem asChild>
               <Link href="/settings">Settings</Link>
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => console.log("Logout clicked")}>
+            <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/auth/signin" })}>
               Logout
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -132,7 +136,7 @@ const Navbar = () => {
                     size="sm"
                     className="flex items-center gap-2 w-full justify-start text-gray-700 hover:text-blue-500 transition-colors px-3 py-2"
                   >
-                    <User className="w-4 h-4" /> Profile
+                    <User className="w-4 h-4" />{(session?.user.name)? session.user.name : "profile" }
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-full">
